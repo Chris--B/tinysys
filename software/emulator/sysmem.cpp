@@ -77,66 +77,32 @@ void CSysMem::Write(uint32_t address, uint32_t word, uint32_t wstrobe)
 
 void CSysMem::Read128bits(uint32_t address, uint32_t* data)
 {
-#if defined(CAT_WINDOWS)
-	uint32_t *wordmem = (uint32_t*)m_devicemem;
-	__m128i *source = (__m128i *)&wordmem[address>>2];
-	__m128i *target = (__m128i *)data;
-	*target = *source;
-#else
 	uint32_t *wordmem = (uint32_t*)m_devicemem;
 	uint64_t *source = (uint64_t *)&wordmem[address>>2];
 	uint64_t *target = (uint64_t *)data;
-	target[0] = source[0];
-	target[1] = source[1];
-#endif
+	memcpy(target, source, 128/8);
 }
 
 void CSysMem::Write128bits(uint32_t address, uint32_t* data)
 {
-#if defined(CAT_WINDOWS)
-	uint32_t *wordmem = (uint32_t*)m_devicemem;
-	__m128i *target = (__m128i *)&wordmem[address>>2];
-	__m128i *source = (__m128i *)data;
-	*target = *source;
-#else
 	uint32_t *wordmem = (uint32_t*)m_devicemem;
 	uint64_t *target = (uint64_t *)&wordmem[address>>2];
 	uint64_t *source = (uint64_t *)data;
-	target[0] = source[0];
-	target[1] = source[1];
-#endif
+	memcpy(target, source, 128/8);
 }
 
 void CSysMem::Read512bits(uint32_t address, uint32_t* data)
 {
-#if defined(CAT_WINDOWS)
-	uint32_t *wordmem = (uint32_t*)m_devicemem;
-	__m128i *source = (__m128i *)&wordmem[address>>2];
-	__m128i *target = (__m128i *)data;
-	for (int i=0; i<4; ++i)
-		target[i] = source[i];
-#else
 	uint32_t *wordmem = (uint32_t*)m_devicemem;
 	uint64_t *source = (uint64_t *)&wordmem[address>>2];
 	uint64_t *target = (uint64_t *)data;
-	for (int i=0; i<8; ++i)
-		target[i] = source[i];
-#endif
+	memcpy(target, source, 512/8);
 }
 
 void CSysMem::Write512bits(uint32_t address, uint32_t* data)
 {
-#if defined(CAT_WINDOWS)
-	uint32_t *wordmem = (uint32_t*)m_devicemem;
-	__m128i *target = (__m128i *)&wordmem[address>>2];
-	__m128i *source = (__m128i *)data;
-	for (int i=0; i<4; ++i)
-		target[i] = source[i];
-#else
 	uint32_t *wordmem = (uint32_t*)m_devicemem;
 	uint64_t *target = (uint64_t *)&wordmem[address>>2];
 	uint64_t *source = (uint64_t *)data;
-	for (int i=0; i<8; ++i)
-		target[i] = source[i];
-#endif
+	memcpy(target, source, 512/8);
 }

@@ -64,6 +64,18 @@ void CBus::Reset(uint8_t* rombin, uint32_t romsize)
 	m_csr[1]->Reset();
 }
 
+CCSRMem* CBus::GetCSR(uint32_t hartid)
+{
+	if (hartid < std::size(m_csr))
+	{
+		return m_csr[hartid];
+	}
+	else
+	{
+		return nullptr;
+	}
+}
+
 void CBus::UpdateVideoLink(uint32_t *pixels, int pitch)
 {
 	m_vpuc->UpdateVideoLink(pixels, pitch, this);

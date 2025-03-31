@@ -49,7 +49,7 @@ public:
 	CVPU* GetVPU() { return m_vpuc; }
 	CLEDs* GetLEDs() { return m_leds; }
 	CSDCard* GetSDCard() { return m_sdcc; }
-	CCSRMem* GetCSR(uint32_t hartid) { return m_csr[hartid]; }
+	CCSRMem* GetCSR(uint32_t hartid);
 
 	void UpdateVideoLink(uint32_t* pixels, int pitch);
 	void QueueByte(uint8_t byte);
